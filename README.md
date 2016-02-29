@@ -4,7 +4,7 @@ opengraph is a Go library and command-line tool for extracting Open Graph metada
 
 **Documentation:** <http://godoc.org/github.com/wyntr/opengraph>  
 **Open Graph protocol:** <http://ogp.me/>  
-**Build Status:** [![travis-ci status](https://api.travis-ci.org/wyntr/opengraph.png)](https://travis-ci.org/wyntr/opengraph) [![Build Status](https://drone.io/github.com/wyntr/opengraph/status.png)](https://drone.io/github.com/wyntr/opengraph/latest)  
+**Build Status:** [![Circle CI](https://circleci.com/gh/wyntr/opengraph.svg?style=svg)](https://circleci.com/gh/wyntr/opengraph) [![travis-ci status](https://api.travis-ci.org/wyntr/opengraph.png)](https://travis-ci.org/wyntr/opengraph) [![Build Status](https://drone.io/github.com/wyntr/opengraph/status.png)](https://drone.io/github.com/wyntr/opengraph/latest)  
 
 ## Usage ##
 
