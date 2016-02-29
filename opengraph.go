@@ -49,23 +49,18 @@ func Extract(doc io.Reader) ([]MetaData, error) {
 
 // Same as Extract but extracts metadata with a specific prefix, e.g. "fb" for Facebook.
 // If prefix is empty all matching metadata is extracted.
-func ExtractPrefix(doc io.Reader, prefix string) ([]MetaData, error) {
-	var tags []MetaData
+func ExtractPrefix(doc io.Reader, prefix string) (tags []MetaData, err error) {
 	z := html.NewTokenizer(doc)
 	for {
 		tt := z.Next()
 		if tt == html.ErrorToken {
-			if z.Err() == io.EOF {
-				return tags, nil
-			}
-			return nil, z.Err()
+			if z.Err() != io.EOF { err = z.Err() }
+			return
 		}
 
 		t := z.Token()
 
-		if t.Data == "head" && t.Type == html.EndTagToken {
-			return tags, nil
-		}
+		if t.Data == "head" && t.Type == html.EndTagToken { return }
 
 		if t.Data == "meta" {
 			var prop, cont, name, tagPrefix string
@@ -84,20 +79,14 @@ func ExtractPrefix(doc io.Reader, prefix string) ([]MetaData, error) {
 				prop = name
 			}
 
-			if prop == "" || cont == "" {
-				continue
-			}
+			if prop == "" || cont == "" { continue }
 
 			if prefix != "" {
-				if !strings.HasPrefix(prop, prefix+":") {
-					continue
-				}
+				if !strings.HasPrefix(prop, prefix+":") { continue }
 				tagPrefix = prefix
 			} else {
 				idx := strings.Index(prop, ":")
-				if idx == -1 {
-					continue
-				}
+				if idx == -1 { continue }
 				tagPrefix = prop[:idx]
 			}
 
@@ -105,5 +94,5 @@ func ExtractPrefix(doc io.Reader, prefix string) ([]MetaData, error) {
 		}
 	}
 
-	return tags, nil
+	return
 }
