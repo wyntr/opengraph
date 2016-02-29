@@ -28,6 +28,7 @@ import (
 	"strings"
 
 	"golang.org/x/net/html"
+	"golang.org/x/net/html/atom"
 )
 
 const (
@@ -60,9 +61,9 @@ func ExtractPrefix(doc io.Reader, prefix string) (tags []MetaData, err error) {
 
 		t := z.Token()
 
-		if t.Data == "head" && t.Type == html.EndTagToken { return }
+		if t.DataAtom == atom.Head && t.Type == html.EndTagToken { return }
 
-		if t.Data == "meta" {
+		if t.DataAtom == atom.Meta {
 			var prop, cont, name, tagPrefix string
 			for _, a := range t.Attr {
 				switch a.Key {
